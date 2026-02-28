@@ -252,7 +252,13 @@ namespace imgutils
   {
     if (!shown)
       throw std::runtime_error("Waiting is only possible when the window is shown");
-    return cv::waitKey(timeout);
+
+    int k = cv::waitKeyEx(timeout);
+    if(k == -1 || k>255){
+	return -1;
+    }
+
+    return k;
   }
   
   void Window::ShowOverlayText(const std::string &text, const bool subtle, const int timeout)
